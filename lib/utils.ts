@@ -6,29 +6,44 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getSiteUrl(request?: Request) {
-  // 1. Explicit Env Override
-  if (process?.env?.NEXT_PUBLIC_SITE_URL) {
-    const url = process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-    return url.includes("0.0.0.0") ? url.replace("0.0.0.0", "localhost") : url;
-  }
+  let url = "";
 
-  // 2. Request-based detection (Server-side)
-  if (request) {
-    const url = new URL(request.url);
-    const host = request.headers.get("host") || url.host;
-    const proto = request.headers.get("x-forwarded-proto") || url.protocol.replace(":", "");
-    const finalHost = host.includes("0.0.0.0") ? host.replace("0.0.0.0", "localhost") : host;
-    return `${proto}://${finalHost}`;
-  }
-
-  // 3. Client-side detection
+  // 1. Client-side detection (Highest Priority for browser actions)
   if (typeof window !== "undefined") {
-    return window.location.origin;
+    url = window.location.origin;
+  }
+  // 2. Request-based detection (Server-side priority)
+  else if (request) {
+    const requestUrl = new URL(request.url);
+    const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || requestUrl.host;
+    const proto = request.headers.get("x-forwarded-proto") || requestUrl.protocol.replace(":", "");
+    url = `${proto}://${host}`;
+  }
+  // 3. Platform Envs (Netlify/Vercel)
+  else if (process?.env?.URL) {
+    url = process.env.URL;
+  }
+  // 4. Explicit Env Override (Fallback)
+  else if (process?.env?.NEXT_PUBLIC_SITE_URL) {
+    url = process.env.NEXT_PUBLIC_SITE_URL;
+  }
+  // 5. Hardcoded fallback
+  else {
+    url = "http://localhost:3000";
   }
 
-  // 4. Platform Envs (Netlify)
-  if (process?.env?.URL) return process.env.URL.replace(/\/$/, "");
+  // Cleanup
+  url = url.replace(/\/$/, "");
 
-  // 5. Hardcoded fallback
-  return "http://localhost:3000";
+  // Fix 0.0.0.0 to localhost for dev ergonomics and cookie security
+  if (url.includes("0.0.0.0")) {
+    url = url.replace("0.0.0.0", "localhost");
+  }
+
+  // Ensure HTTPS in production environments
+  if (!url.includes("localhost") && !url.includes("0.0.0.0") && !url.startsWith("https") && url.includes("netlify.app")) {
+    url = url.replace("http://", "https://");
+  }
+
+  return url;
 }
