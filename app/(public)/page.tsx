@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Zap, Shield, Star, Globe, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
+import { Logo } from "@/components/logo";
 
 export default function HomePage() {
     return (
@@ -19,14 +20,23 @@ export default function HomePage() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="space-y-6 max-w-4xl mx-auto z-10"
                 >
-                    <div className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary backdrop-blur-md shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+                    <div className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-black uppercase tracking-widest text-primary backdrop-blur-md shadow-glow-primary">
                         <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
                         Accepting New Clients
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/50 pb-2">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                        className="mb-8"
+                    >
+                        <Logo size={120} showGlow className="mx-auto" />
+                    </motion.div>
+
+                    <h1 className="text-5xl md:text-7xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white via-white/90 to-white/50 pb-2">
                         Build Your <br className="hidden md:block" />
-                        <span className="text-primary glow-text">Digital Empire</span>
+                        <span className="text-primary glow-text italic">Digital Empire</span>
                     </h1>
 
                     <p className="mx-auto max-w-[700px] text-zinc-400 md:text-xl/relaxed lg:text-xl/relaxed leading-relaxed">
@@ -39,7 +49,7 @@ export default function HomePage() {
                         transition={{ delay: 0.3, duration: 0.8 }}
                         className="flex flex-col sm:flex-row gap-4 justify-center mt-8"
                     >
-                        <Button asChild size="lg" className="h-14 px-8 text-lg font-semibold shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] transition-all duration-300 transform hover:-translate-y-1">
+                        <Button asChild size="lg" className="h-14 px-10 text-lg font-black uppercase tracking-widest shadow-glow-primary hover:scale-105 transition-all duration-300 bg-primary text-white border-none">
                             <Link href="/login">
                                 Start Project <ArrowRight className="ml-2 h-5 w-5" />
                             </Link>
@@ -57,8 +67,8 @@ export default function HomePage() {
                     transition={{ delay: 1, duration: 1 }}
                     className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
                 >
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold">Explore</span>
-                    <div className="w-[1px] h-12 bg-gradient-to-b from-primary/50 to-transparent"></div>
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-black">Explore</span>
+                    <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent"></div>
                 </motion.div>
             </section>
 
@@ -113,8 +123,9 @@ export default function HomePage() {
                                 transition={{ delay: i * 0.1, duration: 0.6 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -5 }}
-                                className="glass-card p-8 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group"
+                                className="glass-card p-8 rounded-[32px] border border-foreground/5 hover:border-primary/50 transition-all duration-500 group relative overflow-hidden"
                             >
+                                <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors"></div>
                                 <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
                                     <feature.icon className="h-7 w-7" />
                                 </div>

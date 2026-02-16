@@ -30,17 +30,20 @@ export async function createOrder(formData: FormData) {
         redirect("/dashboard/new?error=Failed to create order");
     }
 
-    // Discord Integration
-    const discordTicket = await createDiscordTicket(title, user.email || user.id);
+    // Fetch the inserted project ID
+    const { data: newProject } = await supabase
+        .from("projects")
+        .select("id")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
 
     revalidatePath("/dashboard");
 
-    // Redirect to success page with discord info
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const successUrl = new URL("/dashboard/new/success", siteUrl);
-    if (discordTicket) {
-        successUrl.searchParams.set("ticketUrl", discordTicket.url);
+    if (newProject) {
+        redirect(`/dashboard/checkout/${newProject.id}`);
     }
 
-    redirect(successUrl.pathname + successUrl.search);
+    redirect("/dashboard/orders");
 }

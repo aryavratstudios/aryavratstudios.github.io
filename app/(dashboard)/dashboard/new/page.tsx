@@ -34,12 +34,12 @@ export default function NewOrderPage() {
                     </div>
                 </div>
 
-                <Card className="glass-card border-white/5 bg-zinc-900/40 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] -z-10"></div>
+                <Card className="glass-card border-foreground/10 bg-background/50 relative overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] -z-10"></div>
 
-                    <CardHeader className="border-b border-white/5 pb-8">
-                        <CardTitle className="text-3xl font-bold">New Creative Order</CardTitle>
-                        <CardDescription className="text-zinc-500 text-lg">
+                    <CardHeader className="border-b border-foreground/5 pb-10 pt-10 px-10">
+                        <CardTitle className="text-4xl font-black tracking-tighter">NEW CREATIVE ORDER</CardTitle>
+                        <CardDescription className="text-zinc-500 text-sm font-medium mt-2">
                             Describe your vision and we'll bring it to life with precision.
                         </CardDescription>
                     </CardHeader>
@@ -77,9 +77,10 @@ export default function NewOrderPage() {
                                             className="flex h-12 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm ring-offset-background placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 text-white transition-all hover:bg-white/10 appearance-none"
                                             required
                                         >
+                                            <option value="thumbnail" className="bg-zinc-900">Thumbnail Design ($35)</option>
+                                            <option value="video" className="bg-zinc-900">Video Editing ($35)</option>
                                             <option value="web_dev" className="bg-zinc-900">Web Development</option>
                                             <option value="ui_ux" className="bg-zinc-900">UI/UX Design</option>
-                                            <option value="video" className="bg-zinc-900">Video Editing</option>
                                             <option value="marketing" className="bg-zinc-900">Marketing Strategy</option>
                                             <option value="other" className="bg-zinc-900">Other Custom project</option>
                                         </select>

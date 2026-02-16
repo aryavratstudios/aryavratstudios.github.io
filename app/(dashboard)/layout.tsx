@@ -1,5 +1,6 @@
 import { Sidebar } from "@/components/sidebar";
 import { MobileNav } from "@/components/mobile-nav";
+import { AiAssistant } from "@/components/ai-assistant";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -31,14 +32,15 @@ export default async function DashboardLayout({
             <main className="flex-1 overflow-y-auto relative custom-scrollbar pt-20 md:pt-0">
                 {/* Ambient Background */}
                 <div className="fixed inset-0 pointer-events-none -z-10">
-                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] opacity-50"></div>
-                    <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] opacity-30"></div>
+                    <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] opacity-40"></div>
+                    <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[120px] opacity-20"></div>
                 </div>
 
-                <div className="mx-auto max-w-7xl p-8 md:p-12 animate-in fade-in duration-700">
+                <div className="mx-auto max-w-7xl p-6 md:p-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                     {children}
                 </div>
             </main>
+            <AiAssistant />
         </div>
     );
 }

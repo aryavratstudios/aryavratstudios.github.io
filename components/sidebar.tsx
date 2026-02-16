@@ -1,21 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
     LayoutDashboard,
     PlusCircle,
     List,
-    Settings,
     Shield,
     Briefcase,
     LogOut,
     ChevronRight,
+    ChevronLeft,
     Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Logo } from "./logo";
 
 interface SidebarProps {
     role: string;
@@ -23,6 +25,7 @@ interface SidebarProps {
 
 export function Sidebar({ role }: SidebarProps) {
     const pathname = usePathname();
+    const [isCollapsed, setIsCollapsed] = useState(false);
 
     const menuItems = [
         { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -36,36 +39,56 @@ export function Sidebar({ role }: SidebarProps) {
     ];
 
     return (
-        <aside className="hidden md:flex flex-col w-72 border-r border-white/5 bg-zinc-950 h-screen sticky top-0 z-40">
-            <div className="p-8">
-                <Link href="/" className="flex items-center gap-3 font-bold text-2xl tracking-tighter">
-                    <div className="h-10 w-10 bg-primary rounded-xl flex items-center justify-center shadow-glow">
-                        <span className="text-black text-xl font-bold">A</span>
-                    </div>
-                    <span className="text-white">Aryavrat<span className="text-primary">.</span></span>
+        <motion.aside
+            animate={{ width: isCollapsed ? 80 : 288 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="hidden md:flex flex-col border-r border-white/5 bg-zinc-950 h-screen sticky top-0 z-40 relative"
+        >
+            <button
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                className="absolute -right-3 top-20 bg-primary text-white p-1.5 rounded-full shadow-glow-primary z-50 hover:bg-accent hover:scale-110 transition-all"
+            >
+                {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+            </button>
+
+            <div className={cn("p-8 transition-all h-24 flex items-center overflow-hidden", isCollapsed && "px-4 justify-center")}>
+                <Link href="/" className="flex items-center gap-3">
+                    <Logo size={isCollapsed ? 32 : 44} showGlow={!isCollapsed} />
+                    {!isCollapsed && (
+                        <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col">
+                            <span className="text-sm font-black tracking-tighter text-foreground uppercase">Aryavrat</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] font-black text-primary italic">Studios</span>
+                        </motion.div>
+                    )}
                 </Link>
             </div>
 
-            <div className="flex-1 px-4 space-y-8 overflow-y-auto">
+            <div className="flex-1 px-4 space-y-8 overflow-y-auto custom-scrollbar">
                 <div className="space-y-1">
-                    <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-4">Workspace</div>
+                    <div className={cn("text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-4", isCollapsed && "text-center px-0")}>
+                        {isCollapsed ? "•••" : "Workspace"}
+                    </div>
                     {menuItems.map((item) => (
                         <NavItem
                             key={item.href}
                             item={item}
                             active={pathname === item.href}
+                            isCollapsed={isCollapsed}
                         />
                     ))}
                 </div>
 
                 {role === 'admin' && (
                     <div className="space-y-1">
-                        <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-4">Administration</div>
+                        <div className={cn("text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-4", isCollapsed && "text-center px-0")}>
+                            {isCollapsed ? "•••" : "Administration"}
+                        </div>
                         {adminItems.map((item) => (
                             <NavItem
                                 key={item.href}
                                 item={item}
                                 active={pathname === item.href}
+                                isCollapsed={isCollapsed}
                             />
                         ))}
                     </div>
@@ -73,49 +96,55 @@ export function Sidebar({ role }: SidebarProps) {
             </div>
 
             <div className="p-6 border-t border-white/5 space-y-4">
-                <div className="p-4 rounded-2xl bg-primary/5 border border-primary/10">
-                    <div className="flex items-center gap-2 text-xs font-bold text-primary mb-1">
-                        <Star className="w-3 h-3 fill-primary" />
-                        PREMIUM PARTNER
-                    </div>
-                    <p className="text-[10px] text-zinc-500">You have active priority support.</p>
-                </div>
+                {!isCollapsed && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="p-4 rounded-2xl bg-primary/10 border border-primary/20">
+                        <div className="flex items-center gap-2 text-[10px] font-black tracking-[0.25em] text-primary mb-1 uppercase">
+                            <Star className="w-3.5 h-3.5 fill-primary shadow-glow-primary" />
+                            Elite Access
+                        </div>
+                        <p className="text-[9px] text-zinc-500 uppercase font-bold tracking-widest leading-relaxed">Priority production queue active</p>
+                    </motion.div>
+                )}
 
                 <form action="/auth/signout" method="post">
-                    <Button variant="ghost" className="w-full justify-start text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl group" type="submit">
-                        <LogOut className="mr-3 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-                        Sign Out
+                    <Button
+                        variant="ghost"
+                        className={cn(
+                            "w-full justify-start text-zinc-500 hover:text-accent hover:bg-accent/10 rounded-2xl group overflow-hidden border border-transparent hover:border-accent/20 transition-all",
+                            isCollapsed && "justify-center px-0"
+                        )}
+                        type="submit"
+                    >
+                        <LogOut className={cn("h-4 w-4 transition-transform group-hover:-translate-x-1", !isCollapsed && "mr-3")} />
+                        {!isCollapsed && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] font-bold uppercase tracking-[0.2em]">Sign Out</motion.span>}
                     </Button>
                 </form>
             </div>
-        </aside>
+        </motion.aside>
     );
 }
 
-function NavItem({ item, active }: { item: any, active: boolean }) {
+function NavItem({ item, active, isCollapsed }: { item: any, active: boolean, isCollapsed: boolean }) {
     return (
         <Link
             href={item.href}
+            title={isCollapsed ? item.label : ""}
             className={cn(
-                "flex items-center justify-between group px-4 py-3 rounded-xl transition-all duration-300",
+                "flex items-center group px-4 py-3 rounded-2xl transition-all duration-300 relative",
                 active
-                    ? "bg-primary text-black font-bold shadow-glow-primary"
-                    : "text-zinc-400 hover:text-white hover:bg-white/5"
+                    ? "bg-primary text-white font-bold shadow-glow-primary"
+                    : "text-zinc-500 hover:text-foreground hover:bg-accent/10 hover:border-accent/20 border border-transparent",
+                isCollapsed && "justify-center px-0"
             )}
         >
-            <div className="flex items-center gap-3">
-                <item.icon className={cn("h-5 w-5", active ? "text-black" : "text-zinc-500 group-hover:text-primary transition-colors")} />
-                <span className="text-sm tracking-tight">{item.label}</span>
-            </div>
-            {active && (
+            <item.icon className={cn("h-5 w-5 shrink-0", active ? "text-black" : "text-zinc-500 group-hover:text-primary transition-colors", !isCollapsed && "mr-3")} />
+            {!isCollapsed && <span className="text-sm tracking-tight">{item.label}</span>}
+
+            {active && isCollapsed && (
                 <motion.div
-                    layoutId="active-pill"
-                    className="h-1.5 w-1.5 rounded-full bg-black/40"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    layoutId="collapsed-active"
+                    className="absolute left-0 w-1 h-6 bg-black rounded-r-full"
                 />
-            )}
-            {!active && (
-                <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300" />
             )}
         </Link>
     );

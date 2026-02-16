@@ -36,27 +36,24 @@ export default async function AdminPage() {
                         </div>
                         <h1 className="text-4xl font-bold tracking-tight text-white">Admin Console</h1>
                     </div>
-                    <p className="text-zinc-500">Manage all studio project pipelines and portfolio curations.</p>
+                    <p className="text-zinc-500 text-sm font-medium">Manage studio project pipelines and curated showcases.</p>
                 </div>
 
                 <div className="flex items-center gap-3">
                     <div className="relative group">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 group-focus-within:text-primary transition-colors" />
                         <input
-                            placeholder="Search projects..."
-                            className="h-11 w-64 bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 text-xs focus:ring-1 focus:ring-primary focus:outline-none focus:bg-white/10 transition-all"
+                            placeholder="Find projects..."
+                            className="h-11 w-64 bg-foreground/[0.03] border border-foreground/10 rounded-2xl pl-10 pr-4 text-[10px] font-bold uppercase tracking-widest focus:ring-1 focus:ring-primary focus:outline-none focus:bg-foreground/[0.08] transition-all text-foreground"
                         />
                     </div>
-                    <Button variant="outline" className="h-11 rounded-xl border-white/10 bg-white/5 hover:bg-white/10">
-                        <Filter className="w-4 h-4 mr-2" /> Filter
-                    </Button>
                 </div>
             </div>
 
             <Card className="glass-card border-white/5 bg-zinc-900/20 overflow-hidden">
-                <CardHeader className="p-8 border-b border-white/5">
-                    <CardTitle className="text-xl font-bold">Studio Pipeline</CardTitle>
-                    <CardDescription className="text-zinc-500">Live overview of active and legacy studio orders.</CardDescription>
+                <CardHeader className="p-8 border-b border-foreground/5 bg-foreground/[0.02]">
+                    <CardTitle className="text-xl font-black uppercase tracking-widest">Studio Pipeline</CardTitle>
+                    <CardDescription className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Live overview of active studio orders.</CardDescription>
                 </CardHeader>
                 <CardContent className="p-0">
                     <div className="overflow-x-auto">

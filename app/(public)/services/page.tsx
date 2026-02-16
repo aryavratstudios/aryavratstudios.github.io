@@ -3,10 +3,25 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Zap, Globe, Cpu, Layout, Video, Megaphone, ArrowRight } from "lucide-react";
+import { Zap, Globe, Cpu, Layout, Video, Megaphone, ArrowRight, MessageSquare } from "lucide-react";
 import Link from "next/link";
 
 const envServices = [
+    {
+        title: "Video & Thumbnails",
+        description: "High-impact creative assets for YouTubers and content creators. High-conversion thumbnails and professional video production.",
+        icon: Video,
+        features: ["Base Price: $35", "Revision: $5", "YouTube Thumbnails", "Short-form Content"],
+        color: "from-orange-500/20 to-red-500/20",
+        discordNote: true
+    },
+    {
+        title: "Creative Research",
+        description: "In-depth research for your next viral hit. Trend analysis, script outlining, and visual direction strategy.",
+        icon: Zap,
+        features: ["Market Analysis", "Visual Scripting", "Viral Trend Insights", "Competitor Research"],
+        color: "from-yellow-500/20 to-amber-500/20"
+    },
     {
         title: "Web Development",
         description: "Custom, high-performance web applications built with the latest technologies like Next.js, React, and Supabase.",
@@ -22,25 +37,11 @@ const envServices = [
         color: "from-purple-500/20 to-pink-500/20"
     },
     {
-        title: "Video Editing",
-        description: "Professional video editing for content creators, agencies, and brands. High-quality production and storytelling.",
-        icon: Video,
-        features: ["YouTube Editing", "Short-form Content", "Color Grading", "Motion Graphics"],
-        color: "from-orange-500/20 to-red-500/20"
-    },
-    {
         title: "Digital Marketing",
         description: "Strategic marketing campaigns designed to scale your business and reach your target audience effectively.",
         icon: Megaphone,
         features: ["SEO Optimization", "Social Media", "Content Strategy", "PPC Campaigns"],
         color: "from-green-500/20 to-emerald-500/20"
-    },
-    {
-        title: "AI Solutions",
-        description: "Integrate cutting-edge AI features into your existing platforms to automate tasks and enhance user intelligence.",
-        icon: Cpu,
-        features: ["Chatbots", "LLM Integration", "Predictive Analytics", "Automation"],
-        color: "from-yellow-500/20 to-amber-500/20"
     },
     {
         title: "Consulting",
@@ -97,6 +98,12 @@ export default function ServicesPage() {
                                             {feature}
                                         </li>
                                     ))}
+                                    {service.discordNote && (
+                                        <li className="flex items-center text-xs text-primary font-bold mt-4 p-2 bg-primary/5 border border-primary/20 rounded-lg animate-pulse">
+                                            <MessageSquare className="h-4 w-4 mr-2" />
+                                            Bargain on Discord Server
+                                        </li>
+                                    )}
                                 </ul>
                                 <Button asChild variant="outline" className="w-full rounded-xl border-white/10 hover:bg-primary hover:text-black hover:border-primary transition-all duration-300">
                                     <Link href="/login" className="flex items-center justify-center">

@@ -7,6 +7,8 @@ import Link from "next/link";
 import { PlusCircle, Clock, CheckCircle, Package, ArrowRight, TrendingUp, Zap, Sparkles } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
+import { Counter } from "@/components/counter";
+import { cn } from "@/lib/utils";
 
 export default function DashboardPage() {
     const [projects, setProjects] = useState<any[]>([]);
@@ -50,21 +52,21 @@ export default function DashboardPage() {
             >
                 <div>
                     <h1 className="text-4xl font-bold tracking-tight text-white mb-2">Welcome Back</h1>
-                    <p className="text-zinc-500">Here's an overview of your active creative projects.</p>
+                    <p className="text-zinc-500 text-sm">Here's an overview of your active creative projects.</p>
                 </div>
-                <Button asChild className="rounded-full h-12 px-6 font-bold shadow-glow-primary hover:scale-105 transition-all">
+                <Button asChild className="rounded-full h-12 px-8 font-black shadow-glow-primary hover:scale-105 transition-all bg-primary text-white border-none">
                     <Link href="/dashboard/new">
                         <PlusCircle className="mr-2 h-5 w-5" />
-                        Start New Project
+                        START NEW PROJECT
                     </Link>
                 </Button>
             </motion.div>
 
             <div className="grid gap-6 md:grid-cols-3">
                 {[
-                    { title: "In Production", count: activeProjects.length, icon: Zap, sub: "Currently being crafted", color: "text-blue-400" },
-                    { title: "Review Required", count: pendingProjects.length, icon: Sparkles, sub: "Waiting for your feedback", color: "text-amber-400" },
-                    { title: "Completed", count: completedProjects.length, icon: CheckCircle, sub: "Successfully delivered", color: "text-green-400" },
+                    { title: "In Production", count: activeProjects.length, icon: Zap, sub: "Currently being crafted", color: "text-secondary", bg: "bg-secondary/10" },
+                    { title: "Review Required", count: pendingProjects.length, icon: Sparkles, sub: "Waiting for your feedback", color: "text-primary", bg: "bg-primary/10" },
+                    { title: "Completed", count: completedProjects.length, icon: CheckCircle, sub: "Successfully delivered", color: "text-accent", bg: "bg-accent/10" },
                 ].map((stat, i) => (
                     <motion.div
                         key={stat.title}
@@ -72,14 +74,18 @@ export default function DashboardPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                     >
-                        <Card className="glass-card border-white/5 bg-zinc-900/40 hover:border-primary/20 transition-all duration-300">
+                        <Card className="glass-card border-foreground/5 bg-foreground/[0.02] hover:border-primary/30 hover:bg-foreground/[0.04] transition-all duration-500 group">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-bold uppercase tracking-widest text-zinc-500">{stat.title}</CardTitle>
-                                <stat.icon className={`h-5 w-5 ${stat.color}`} />
+                                <CardTitle className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 group-hover:text-primary transition-colors">{stat.title}</CardTitle>
+                                <div className={cn("p-2.5 rounded-xl transition-transform group-hover:scale-110 group-hover:rotate-12", stat.bg)}>
+                                    <stat.icon className={cn("h-4 w-4", stat.color)} />
+                                </div>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-4xl font-bold text-white mb-1">{stat.count}</div>
-                                <p className="text-xs text-zinc-500 font-medium">{stat.sub}</p>
+                                <div className="text-5xl font-black text-foreground mb-1 tracking-tighter">
+                                    <Counter value={stat.count} />
+                                </div>
+                                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">{stat.sub}</p>
                             </CardContent>
                         </Card>
                     </motion.div>
@@ -118,10 +124,15 @@ export default function DashboardPage() {
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-4">
+                                            {project.status === 'pending_review' && (
+                                                <Button size="sm" asChild className="h-8 rounded-full bg-primary/20 text-primary border border-primary/20 hover:bg-primary text-[10px] font-black uppercase tracking-widest hover:text-black transition-all">
+                                                    <Link href={`/dashboard/checkout/${project.id}`}>Complete Payment</Link>
+                                                </Button>
+                                            )}
                                             <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest
-                                                ${project.status === 'completed' ? 'bg-green-500/10 text-green-500' :
-                                                    project.status === 'in_progress' ? 'bg-blue-500/10 text-blue-400 font-bold' :
-                                                        'bg-zinc-800 text-zinc-400'}`}>
+                                                ${project.status === 'completed' ? 'bg-secondary/10 text-secondary border border-secondary/20' :
+                                                    project.status === 'in_progress' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' :
+                                                        'bg-zinc-800 text-zinc-500 border border-white/5'}`}>
                                                 {project.status.replace('_', ' ')}
                                             </span>
                                             <ChevronRight className="h-4 w-4 text-zinc-700 group-hover:text-white transition-colors" />

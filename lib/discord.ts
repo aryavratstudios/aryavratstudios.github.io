@@ -23,6 +23,7 @@ export async function createDiscordTicket(projectName: string, clientName: strin
                 name: channelName,
                 type: 0, // Guild Text Channel
                 topic: `Project: ${projectName} | Client: ${clientName}`,
+                parent_id: process.env.DISCORD_TICKET_CATEGORY || null,
                 permission_overwrites: [
                     {
                         id: guildId, // @everyone role ID is the same as guild ID
