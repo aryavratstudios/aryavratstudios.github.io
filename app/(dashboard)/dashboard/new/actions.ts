@@ -36,7 +36,8 @@ export async function createOrder(formData: FormData) {
     revalidatePath("/dashboard");
 
     // Redirect to success page with discord info
-    const successUrl = new URL("/dashboard/new/success", "http://localhost:3000");
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const successUrl = new URL("/dashboard/new/success", siteUrl);
     if (discordTicket) {
         successUrl.searchParams.set("ticketUrl", discordTicket.url);
     }
