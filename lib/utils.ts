@@ -16,7 +16,7 @@ export function getSiteUrl(request?: Request) {
   else if (request) {
     const requestUrl = new URL(request.url);
     const host = request.headers.get("x-forwarded-host") || request.headers.get("host") || requestUrl.host;
-    const proto = request.headers.get("x-forwarded-proto") || requestUrl.protocol.replace(":", "");
+    const proto = request.headers.get("x-forwarded-proto") || (requestUrl.protocol === 'https:' || host.includes('netlify.app') ? 'https' : 'http');
     url = `${proto}://${host}`;
   }
   // 3. Platform Envs (Netlify/Vercel)
@@ -36,13 +36,14 @@ export function getSiteUrl(request?: Request) {
   url = url.replace(/\/$/, "");
 
   // Fix 0.0.0.0 to localhost for dev ergonomics and cookie security
+  // We handle both exact match and with port
   if (url.includes("0.0.0.0")) {
-    url = url.replace("0.0.0.0", "localhost");
+    url = url.replace(/0\.0\.0\.0/g, "localhost");
   }
 
-  // Ensure HTTPS in production environments
-  if (!url.includes("localhost") && !url.includes("0.0.0.0") && !url.startsWith("https") && url.includes("netlify.app")) {
-    url = url.replace("http://", "https://");
+  // Final validation: Ensure protocol is present
+  if (!url.startsWith("http")) {
+    url = `https://${url}`;
   }
 
   return url;
