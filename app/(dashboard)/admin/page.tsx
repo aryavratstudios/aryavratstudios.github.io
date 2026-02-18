@@ -132,6 +132,7 @@ export default async function AdminPage() {
                                                         <span className="text-zinc-500 font-bold">$</span>
                                                         <AutoSubmitInput
                                                             name="price"
+                                                            defaultValue={project.price}
                                                             className="w-16 bg-black/40 border border-white/10 rounded-lg px-2 py-1 text-xs text-white focus:ring-1 focus:ring-white outline-none"
                                                             action={updateProjectPrice}
                                                         />
