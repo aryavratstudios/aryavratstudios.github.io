@@ -74,8 +74,8 @@ export default function HomePage() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="space-y-6 max-w-4xl mx-auto z-10"
                 >
-                    <div className="inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm font-semibold text-emerald-500 backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                        <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
+                    <div className="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                        <span className="flex h-2 w-2 rounded-full bg-white mr-2 animate-pulse"></span>
                         Accepting New Clients
                     </div>
 

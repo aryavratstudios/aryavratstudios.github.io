@@ -63,8 +63,8 @@ export default async function OrderDetailsPage({ params }: OrderDetailsProps) {
                                     <div className="flex items-center gap-3">
                                         <span className={cn(
                                             "px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border",
-                                            project.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                                project.status === 'in_progress' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                                            project.status === 'completed' ? 'bg-white/10 text-white border-white/20' :
+                                                project.status === 'in_progress' ? 'bg-white/5 text-white border-white/10' :
                                                     'bg-white/5 text-zinc-500 border-white/5'
                                         )}>
                                             {project.status.replace('_', ' ')}
@@ -96,7 +96,7 @@ export default async function OrderDetailsPage({ params }: OrderDetailsProps) {
                                 </div>
                                 <div className="space-y-1">
                                     <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest">Financial Clearance</span>
-                                    <p className="text-emerald-500 font-bold text-sm font-mono">${project.final_price}</p>
+                                    <p className="text-white font-bold text-sm font-mono">${project.final_price}</p>
                                 </div>
                                 <div className="space-y-1">
                                     <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest">Priority Status</span>
@@ -122,17 +122,17 @@ export default async function OrderDetailsPage({ params }: OrderDetailsProps) {
                 {/* Sidebar Info */}
                 <div className="space-y-8">
                     {project.deliverable_url && (
-                        <Card className="glass-card border-emerald-500/20 bg-emerald-500/5 rounded-[2.5rem] overflow-hidden relative group">
-                            <div className="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <Card className="glass-card border-white/20 bg-white/5 rounded-[2.5rem] overflow-hidden relative group">
+                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <CardContent className="p-8 space-y-6 text-center">
-                                <div className="h-16 w-16 rounded-[1.5rem] bg-emerald-500/20 flex items-center justify-center text-emerald-500 mx-auto border border-emerald-500/20 shadow-glow-emerald">
+                                <div className="h-16 w-16 rounded-[1.5rem] bg-white/20 flex items-center justify-center text-white mx-auto border border-white/20 shadow-glow-primary">
                                     <Package className="w-8 h-8" />
                                 </div>
                                 <div className="space-y-2">
                                     <h3 className="text-xl font-black text-white uppercase tracking-tighter">Production Delivered</h3>
                                     <p className="text-xs text-zinc-500 font-medium">Your assets have cleared quality control and are ready for deployment.</p>
                                 </div>
-                                <Button asChild className="w-full h-14 rounded-2xl bg-emerald-500 text-black font-black hover:scale-105 transition-all uppercase tracking-widest text-[10px]">
+                                <Button asChild className="w-full h-14 rounded-2xl bg-white text-black font-black hover:scale-105 transition-all uppercase tracking-widest text-[10px]">
                                     <a href={project.deliverable_url} target="_blank" rel="noopener noreferrer">
                                         DOWNLOAD ASSETS <ExternalLink className="ml-2 h-4 w-4" />
                                     </a>

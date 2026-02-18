@@ -47,8 +47,8 @@ export default async function AdminPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
                     <div className="flex items-center gap-3 mb-2">
-                        <div className="h-10 w-10 bg-emerald-500/10 rounded-xl flex items-center justify-center border border-emerald-500/20 shadow-glow-emerald-small">
-                            <Shield className="w-6 h-6 text-emerald-500" />
+                        <div className="h-10 w-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 shadow-glow-primary">
+                            <Shield className="w-6 h-6 text-white" />
                         </div>
                         <h1 className="text-4xl font-black tracking-tighter text-white uppercase">Command Console</h1>
                     </div>
@@ -59,7 +59,7 @@ export default async function AdminPage() {
                     <div className={cn(
                         "flex items-center gap-3 px-5 py-2.5 rounded-2xl border transition-all",
                         discordStatus.status === 'connected'
-                            ? "bg-emerald-500/5 border-emerald-500/20 text-emerald-500 shadow-glow-emerald-small"
+                            ? "bg-white/5 border-white/20 text-white shadow-glow-primary"
                             : "bg-red-500/5 border-red-500/20 text-red-500"
                     )}>
                         {discordStatus.status === 'connected' ? (
@@ -85,10 +85,10 @@ export default async function AdminPage() {
 
             <Tabs defaultValue="projects" className="space-y-8">
                 <TabsList className="bg-zinc-900/40 border border-white/5 p-1 rounded-2xl h-14">
-                    <TabsTrigger value="projects" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-emerald-500 data-[state=active]:text-black transition-all">Projects</TabsTrigger>
-                    <TabsTrigger value="team" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-emerald-500 data-[state=active]:text-black transition-all">Team & Users</TabsTrigger>
-                    <TabsTrigger value="portfolio" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-emerald-500 data-[state=active]:text-black transition-all">Portfolio</TabsTrigger>
-                    <TabsTrigger value="coupons" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-amber-500 data-[state=active]:text-black transition-all">Economic Control</TabsTrigger>
+                    <TabsTrigger value="projects" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-white data-[state=active]:text-black transition-all">Projects</TabsTrigger>
+                    <TabsTrigger value="team" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-white data-[state=active]:text-black transition-all">Team & Users</TabsTrigger>
+                    <TabsTrigger value="portfolio" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-white data-[state=active]:text-black transition-all">Portfolio</TabsTrigger>
+                    <TabsTrigger value="coupons" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest data-[state=active]:bg-white data-[state=active]:text-black transition-all">Economic Control</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="projects">
@@ -113,7 +113,7 @@ export default async function AdminPage() {
                                             <tr key={project.id} className="hover:bg-white/[0.02] transition-colors group">
                                                 <td className="px-8 py-6">
                                                     <div className="flex items-center gap-4">
-                                                        <div className="h-10 w-10 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-500 group-hover:bg-emerald-500/10 group-hover:text-emerald-500 transition-all border border-white/5">
+                                                        <div className="h-10 w-10 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-500 group-hover:bg-white/10 group-hover:text-white transition-all border border-white/5">
                                                             <User className="h-5 w-5" />
                                                         </div>
                                                         <div>
@@ -124,7 +124,7 @@ export default async function AdminPage() {
                                                 </td>
                                                 <td className="px-8 py-6">
                                                     <div className="font-bold text-white text-sm">{project.title}</div>
-                                                    <div className="text-emerald-500 text-[10px] font-black uppercase tracking-widest mt-1">{project.service_type}</div>
+                                                    <div className="text-white text-[10px] font-black uppercase tracking-widest mt-1">{project.service_type}</div>
                                                 </td>
                                                 <td className="px-8 py-6">
                                                     <form action={updateProjectPrice} className="flex items-center gap-2">
@@ -132,8 +132,7 @@ export default async function AdminPage() {
                                                         <span className="text-zinc-500 font-bold">$</span>
                                                         <AutoSubmitInput
                                                             name="price"
-                                                            defaultValue={project.price}
-                                                            className="w-16 bg-black/40 border border-white/10 rounded-lg px-2 py-1 text-xs text-white focus:ring-1 focus:ring-emerald-500 outline-none"
+                                                            className="w-16 bg-black/40 border border-white/10 rounded-lg px-2 py-1 text-xs text-white focus:ring-1 focus:ring-white outline-none"
                                                             action={updateProjectPrice}
                                                         />
                                                     </form>
@@ -143,8 +142,7 @@ export default async function AdminPage() {
                                                         <input type="hidden" name="id" value={project.id} />
                                                         <AutoSubmitSelect
                                                             name="status"
-                                                            defaultValue={project.status}
-                                                            className="bg-black/60 border border-white/10 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest text-zinc-400 focus:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none hover:bg-zinc-800 transition-all cursor-pointer"
+                                                            className="bg-black/60 border border-white/10 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest text-zinc-400 focus:text-white focus:ring-1 focus:ring-white focus:outline-none hover:bg-zinc-800 transition-all cursor-pointer"
                                                             action={updateProjectStatus}
                                                         >
                                                             <option value="pending_review">PENDING</option>
@@ -160,7 +158,7 @@ export default async function AdminPage() {
                                                     <div className="flex items-center justify-end gap-3">
                                                         <Link
                                                             href={`/dashboard/orders/${project.id}`}
-                                                            className="h-9 w-9 bg-white/5 border border-white/5 rounded-lg flex items-center justify-center text-zinc-500 hover:bg-emerald-500/10 hover:text-emerald-500 hover:border-emerald-500/20 transition-all group/btn"
+                                                            className="h-9 w-9 bg-white/5 border border-white/5 rounded-lg flex items-center justify-center text-zinc-500 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all group/btn"
                                                         >
                                                             <ArrowUpRight className="w-4 h-4" />
                                                         </Link>
@@ -171,7 +169,7 @@ export default async function AdminPage() {
                                                                 type="submit"
                                                                 className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[2px] transition-all
                                                                     ${project.show_in_portfolio
-                                                                        ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shadow-glow-emerald-small'
+                                                                        ? 'bg-white/10 text-white border border-white/20 shadow-glow-primary'
                                                                         : 'bg-zinc-800 text-zinc-500 border border-white/5 hover:bg-zinc-700 hover:text-white'}`}
                                                             >
                                                                 {project.show_in_portfolio ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
@@ -262,7 +260,7 @@ export default async function AdminPage() {
                                                 <div className="flex items-center gap-4">
                                                     <div className={cn(
                                                         "h-10 w-10 rounded-xl flex items-center justify-center transition-all border border-white/5",
-                                                        p.role === 'admin' ? "bg-amber-500/10 text-amber-500 shadow-glow-amber-small" : "bg-zinc-800 text-zinc-500"
+                                                        p.role === 'admin' ? "bg-white/10 text-white shadow-glow-primary-small" : "bg-zinc-800 text-zinc-500"
                                                     )}>
                                                         <Users className="h-5 w-5" />
                                                     </div>
@@ -302,8 +300,8 @@ export default async function AdminPage() {
                 <TabsContent value="portfolio" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div className="glass-card rounded-[2.5rem] p-10 border border-white/5 bg-zinc-900/40">
                         <div className="flex items-center gap-4 mb-10">
-                            <div className="h-12 w-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/20 shadow-glow-emerald-small">
-                                <Plus className="text-emerald-500 w-6 h-6" />
+                            <div className="h-12 w-12 rounded-2xl bg-white/20 flex items-center justify-center border border-white/20 shadow-glow-primary">
+                                <Plus className="text-white w-6 h-6" />
                             </div>
                             <div>
                                 <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Publish to Portfolio</h2>
@@ -314,7 +312,7 @@ export default async function AdminPage() {
                         <form action={addPortfolioItem} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Project Identifier</label>
-                                <input name="title" required className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all" placeholder="E.g. MrBeast Thumbnail Style" />
+                                <input name="title" required className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-white outline-none transition-all" placeholder="E.g. MrBeast Thumbnail Style" />
                             </div>
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Creative Category</label>
@@ -335,22 +333,22 @@ export default async function AdminPage() {
                             </div>
                             <div className="space-y-3 md:col-span-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Asset Asset URL (Cdn/Image)</label>
-                                <input name="image_url" required className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all" placeholder="https://cdn.aryavrat.studio/assets/..." />
+                                <input name="image_url" required className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-white outline-none transition-all" placeholder="https://cdn.aryavrat.studio/assets/..." />
                             </div>
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Client Name</label>
-                                <input name="client_name" className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all" placeholder="E.g. MrBeast, CodeWithHarry" />
+                                <input name="client_name" className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-white outline-none transition-all" placeholder="E.g. MrBeast, CodeWithHarry" />
                             </div>
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Project URL (Optional)</label>
-                                <input name="project_url" className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all" placeholder="https://..." />
+                                <input name="project_url" className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-white outline-none transition-all" placeholder="https://..." />
                             </div>
                             <div className="space-y-3 md:col-span-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Production Brief</label>
-                                <textarea name="description" className="w-full h-32 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all resize-none" placeholder="Technical details, tools used, or client success metrics..." />
+                                <textarea name="description" className="w-full h-32 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm text-white focus:ring-1 focus:ring-white outline-none transition-all resize-none" placeholder="Technical details, tools used, or client success metrics..." />
                             </div>
                             <div className="md:col-span-2">
-                                <Button type="submit" className="w-full h-16 rounded-2xl bg-emerald-500 text-black font-black text-lg shadow-glow-emerald hover:scale-[1.01] transition-all">
+                                <Button type="submit" className="w-full h-16 rounded-2xl bg-white text-black font-black text-lg shadow-glow-primary hover:scale-[1.01] transition-all">
                                     DEPLOY TO GLOBAL PORTFOLIO
                                 </Button>
                             </div>
@@ -374,7 +372,7 @@ export default async function AdminPage() {
                                 </div>
                                 <div className="p-8">
                                     <div className="flex items-center gap-2 mb-4">
-                                        <span className="text-[9px] font-black text-emerald-500 uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">{item.service_type}</span>
+                                        <span className="text-[9px] font-black text-white uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-white/10 border border-white/20">{item.service_type}</span>
                                         {item.client_name && (
                                             <span className="text-[9px] font-black text-zinc-400 uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-zinc-800/50 border border-white/5">{item.client_name}</span>
                                         )}
@@ -394,9 +392,9 @@ export default async function AdminPage() {
 
                 <TabsContent value="coupons">
                     <div className="grid md:grid-cols-3 gap-8">
-                        <Card className="glass-card border-white/5 bg-zinc-900/40 border-l-amber-500/50 border-l-4">
+                        <Card className="glass-card border-white/5 bg-zinc-900/40 border-l-white/50 border-l-4">
                             <CardHeader>
-                                <CardTitle className="text-sm font-black uppercase tracking-widest text-amber-500 flex items-center gap-2">
+                                <CardTitle className="text-sm font-black uppercase tracking-widest text-white flex items-center gap-2">
                                     <Tag className="w-4 h-4" /> Issue Coupon
                                 </CardTitle>
                             </CardHeader>
@@ -410,7 +408,7 @@ export default async function AdminPage() {
                                         <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Discount Percent</label>
                                         <input name="discount" type="number" placeholder="20" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white" required />
                                     </div>
-                                    <Button type="submit" className="w-full bg-amber-500 text-black font-black uppercase text-[10px] tracking-widest rounded-xl hover:scale-105 transition-all shadow-glow-amber">Activate Code</Button>
+                                    <Button type="submit" className="w-full bg-white text-black font-black uppercase text-[10px] tracking-widest rounded-xl hover:scale-105 transition-all shadow-glow-primary">Activate Code</Button>
                                 </form>
                             </CardContent>
                         </Card>
@@ -432,7 +430,7 @@ export default async function AdminPage() {
                                         {coupons?.map((c) => (
                                             <tr key={c.id}>
                                                 <td className="px-6 py-4 font-mono font-bold text-white tracking-widest">{c.code}</td>
-                                                <td className="px-6 py-4 font-bold text-emerald-500">-{c.discount_percent}%</td>
+                                                <td className="px-6 py-4 font-bold text-white">-{c.discount_percent}%</td>
                                                 <td className="px-6 py-4 uppercase text-[10px] font-black text-zinc-500">{c.active ? 'Active' : 'Expired'}</td>
                                             </tr>
                                         ))}

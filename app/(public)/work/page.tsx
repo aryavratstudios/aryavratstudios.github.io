@@ -32,16 +32,16 @@ export default async function WorkPage() {
         <div className="py-24 md:py-48 bg-black min-h-screen relative overflow-hidden">
             {/* Cinematic Background Layer */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/10 rounded-full blur-[120px] animate-pulse"></div>
-                <div className="absolute bottom-[20%] right-[-10%] w-[30%] h-[30%] bg-blue-500/10 rounded-full blur-[100px] animate-pulse delay-700"></div>
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/10 rounded-full blur-[120px] animate-pulse"></div>
+                <div className="absolute bottom-[20%] right-[-10%] w-[30%] h-[30%] bg-white/5 rounded-full blur-[100px] animate-pulse delay-700"></div>
                 <div className="absolute top-[30%] right-[10%] w-[25%] h-[25%] bg-primary/10 rounded-full blur-[120px] animate-pulse delay-1000"></div>
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
             </div>
 
             <div className="container-tight relative z-10">
                 <div className="max-w-4xl mx-auto mb-24 space-y-8 text-center animate-in fade-in slide-in-from-bottom-12 duration-1000">
-                    <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-emerald-500 text-xs font-semibold backdrop-blur-md shadow-2xl mx-auto">
-                        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-glow-emerald animate-ping"></div>
+                    <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white text-xs font-semibold backdrop-blur-md shadow-2xl mx-auto">
+                        <div className="h-1.5 w-1.5 rounded-full bg-white shadow-glow-primary animate-ping"></div>
                         Portfolio Exhibition
                     </div>
                     <div className="space-y-6">

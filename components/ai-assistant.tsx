@@ -60,7 +60,7 @@ export function AiAssistant() {
                                 </div>
                                 <div>
                                     <h4 className="text-sm font-bold text-white mb-1">Aryavrat AI</h4>
-                                    <p className="text-[10px] text-emerald-500 font-medium animate-pulse">Neural Interface Active</p>
+                                    <p className="text-[10px] text-white font-medium animate-pulse">Neural Interface Active</p>
                                 </div>
                             </div>
                             <button onClick={() => setIsOpen(false)} className="h-10 w-10 rounded-2xl hover:bg-white/5 flex items-center justify-center text-zinc-500 transition-colors">

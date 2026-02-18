@@ -20,7 +20,7 @@ const envServices = [
         description: "In-depth research for your next viral hit. Trend analysis, script outlining, and visual direction strategy.",
         icon: Zap,
         features: ["Market Analysis", "Visual Scripting", "Viral Trend Insights", "Competitor Research"],
-        color: "from-yellow-500/20 to-amber-500/20"
+        color: "from-white/20 to-white/10"
     },
     {
         title: "Web Development",
@@ -41,7 +41,7 @@ const envServices = [
         description: "Strategic marketing campaigns designed to scale your business and reach your target audience effectively.",
         icon: Megaphone,
         features: ["SEO Optimization", "Social Media", "Content Strategy", "PPC Campaigns"],
-        color: "from-green-500/20 to-emerald-500/20"
+        color: "from-white/20 to-white/10"
     },
     {
         title: "Consulting",
