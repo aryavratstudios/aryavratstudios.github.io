@@ -14,6 +14,7 @@ interface Project {
     image_url?: string;
     deliverable_url?: string;
     project_url?: string;
+    client_name?: string;
 }
 
 function ProjectCard({ project }: { project: Project }) {
@@ -66,6 +67,9 @@ function ProjectCard({ project }: { project: Project }) {
                             <div className="space-y-1">
                                 <h4 className="text-xl font-bold text-white line-clamp-1">{project.title}</h4>
                                 <p className="text-xs font-medium text-primary">{project.service_type}</p>
+                                {project.client_name && (
+                                    <p className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">{project.client_name}</p>
+                                )}
                             </div>
                             {(project.deliverable_url || project.project_url) && (
                                 <Link
@@ -84,6 +88,11 @@ function ProjectCard({ project }: { project: Project }) {
                     <span className="px-5 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/5 text-[10px] font-semibold text-primary">
                         {project.service_type}
                     </span>
+                    {project.client_name && (
+                        <span className="ml-2 px-5 py-2 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-500/20 text-[10px] font-semibold text-emerald-400">
+                            {project.client_name}
+                        </span>
+                    )}
                 </div>
             </div>
 
@@ -122,7 +131,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
     }, [projects]);
 
     const filteredAndSortedProjects = useMemo(() => {
-        let filtered = projects.filter(project => {
+        const filtered = projects.filter((project) => {
             const matchesSearch =
                 project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 project.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -187,7 +196,7 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
                     <div className="flex items-center gap-1 p-0.5">
                         <select
                             value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value as any)}
+                            onChange={(e) => setSortBy(e.target.value as "recent" | "popular")}
                             className="bg-white/5 text-zinc-400 text-[11px] font-semibold px-4 py-1.5 rounded-full border border-white/5 focus:outline-none hover:bg-white/10 hover:text-white transition-all appearance-none cursor-pointer"
                         >
                             <option value="recent">Recent</option>

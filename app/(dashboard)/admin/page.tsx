@@ -11,6 +11,7 @@ import { getDiscordStatus } from "@/lib/discord";
 import { AutoSubmitInput, AutoSubmitSelect } from "@/components/admin/auto-submit-controls";
 import { addPortfolioItem, deletePortfolioItem } from "./portfolio-actions";
 import { CustomSelect } from "@/components/ui/custom-select";
+import { ExternalLink } from "lucide-react";
 
 export default async function AdminPage() {
     const supabase = await createClient();
@@ -336,6 +337,14 @@ export default async function AdminPage() {
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Asset Asset URL (Cdn/Image)</label>
                                 <input name="image_url" required className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all" placeholder="https://cdn.aryavrat.studio/assets/..." />
                             </div>
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Client Name</label>
+                                <input name="client_name" className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all" placeholder="E.g. MrBeast, CodeWithHarry" />
+                            </div>
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Project URL (Optional)</label>
+                                <input name="project_url" className="w-full h-14 bg-black/40 border border-white/10 rounded-2xl px-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all" placeholder="https://..." />
+                            </div>
                             <div className="space-y-3 md:col-span-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Production Brief</label>
                                 <textarea name="description" className="w-full h-32 bg-black/40 border border-white/10 rounded-2xl p-6 text-sm text-white focus:ring-1 focus:ring-emerald-500 outline-none transition-all resize-none" placeholder="Technical details, tools used, or client success metrics..." />
@@ -366,9 +375,17 @@ export default async function AdminPage() {
                                 <div className="p-8">
                                     <div className="flex items-center gap-2 mb-4">
                                         <span className="text-[9px] font-black text-emerald-500 uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">{item.service_type}</span>
+                                        {item.client_name && (
+                                            <span className="text-[9px] font-black text-zinc-400 uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-zinc-800/50 border border-white/5">{item.client_name}</span>
+                                        )}
                                     </div>
                                     <h3 className="text-xl font-black text-white mb-3 tracking-tight">{item.title}</h3>
                                     <p className="text-zinc-500 text-xs font-medium leading-relaxed line-clamp-2">{item.description}</p>
+                                    {item.project_url && (
+                                        <a href={item.project_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-[10px] font-black text-primary uppercase tracking-widest hover:underline">
+                                            View Project <ExternalLink className="w-3 h-3" />
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         ))}
