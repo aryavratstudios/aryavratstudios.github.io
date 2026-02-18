@@ -124,7 +124,7 @@ export default async function AdminPage() {
                                                 </td>
                                                 <td className="px-8 py-6">
                                                     <div className="font-bold text-white text-sm">{project.title}</div>
-                                                    <div className="text-emerald-500 text-[10px] font-black uppercase tracking-widest mt-1">{project.service_type}</div>
+                                                    <div className="text-green-500 text-[10px] font-black uppercase tracking-widest mt-1">{project.service_type}</div>
                                                 </td>
                                                 <td className="px-8 py-6">
                                                     <form action={updateProjectPrice} className="flex items-center gap-2">
@@ -374,7 +374,7 @@ export default async function AdminPage() {
                                 </div>
                                 <div className="p-8">
                                     <div className="flex items-center gap-2 mb-4">
-                                        <span className="text-[9px] font-black text-emerald-500 uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">{item.service_type}</span>
+                                        <span className="text-[9px] font-black text-green-500 uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20">{item.service_type}</span>
                                         {item.client_name && (
                                             <span className="text-[9px] font-black text-zinc-400 uppercase tracking-[2px] px-3 py-1.5 rounded-full bg-zinc-800/50 border border-white/5">{item.client_name}</span>
                                         )}
@@ -432,7 +432,7 @@ export default async function AdminPage() {
                                         {coupons?.map((c) => (
                                             <tr key={c.id}>
                                                 <td className="px-6 py-4 font-mono font-bold text-white tracking-widest">{c.code}</td>
-                                                <td className="px-6 py-4 font-bold text-emerald-500">-{c.discount_percent}%</td>
+                                                <td className="px-6 py-4 font-bold text-green-500">-{c.discount_percent}%</td>
                                                 <td className="px-6 py-4 uppercase text-[10px] font-black text-zinc-500">{c.active ? 'Active' : 'Expired'}</td>
                                             </tr>
                                         ))}

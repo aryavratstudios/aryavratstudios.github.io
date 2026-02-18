@@ -68,7 +68,7 @@ function ProjectCard({ project }: { project: Project }) {
                                 <h4 className="text-xl font-bold text-white line-clamp-1">{project.title}</h4>
                                 <p className="text-xs font-medium text-primary">{project.service_type}</p>
                                 {project.client_name && (
-                                    <p className="text-[10px] font-semibold text-white uppercase tracking-wider">{project.client_name}</p>
+                                    <p className="text-[10px] font-semibold text-green-500 uppercase tracking-wider">{project.client_name}</p>
                                 )}
                             </div>
                             {(project.deliverable_url || project.project_url) && (
@@ -89,7 +89,7 @@ function ProjectCard({ project }: { project: Project }) {
                         {project.service_type}
                     </span>
                     {project.client_name && (
-                        <span className="ml-2 px-5 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-[10px] font-semibold text-white">
+                        <span className="ml-2 px-5 py-2 rounded-full bg-green-500/20 backdrop-blur-md border border-green-500/20 text-[10px] font-semibold text-green-500">
                             {project.client_name}
                         </span>
                     )}
