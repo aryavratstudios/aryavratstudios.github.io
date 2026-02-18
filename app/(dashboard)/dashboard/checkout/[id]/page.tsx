@@ -157,7 +157,7 @@ export default function CheckoutPage() {
                                     <span className="text-white font-bold font-mono">${basePrice}</span>
                                 </div>
                                 {appliedCoupon && (
-                                    <div className="flex justify-between items-center text-white font-bold animate-in fade-in slide-in-from-left-4 duration-500">
+                                    <div className="flex justify-between items-center text-emerald-500 font-bold animate-in fade-in slide-in-from-left-4 duration-500">
                                         <div className="flex items-center gap-2">
                                             <Tag className="w-4 h-4" />
                                             <span>Promo Applied ({appliedCoupon.discountPercent}%)</span>
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
                                 )}
                                 <div className="flex justify-between items-center">
                                     <span className="text-zinc-400 font-medium">Priority Creative Research</span>
-                                    <span className="text-white font-bold uppercase text-[10px] tracking-widest">Included</span>
+                                    <span className="text-emerald-500 font-bold uppercase text-[10px] tracking-widest">Included</span>
                                 </div>
                                 <div className="pt-5 border-t border-white/10 flex justify-between items-center">
                                     <span className="font-black text-white text-xl tracking-tighter uppercase">Total Investment</span>
@@ -176,9 +176,9 @@ export default function CheckoutPage() {
                             </div>
                         </div>
 
-                        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
-                            <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/20">
-                                <ShieldCheck className="text-white w-5 h-5" />
+                        <div className="p-5 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-start gap-4">
+                            <div className="h-10 w-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                                <ShieldCheck className="text-emerald-500 w-5 h-5" />
                             </div>
                             <div>
                                 <h4 className="font-bold text-white text-sm">Escrow Protection Active</h4>
@@ -227,7 +227,7 @@ export default function CheckoutPage() {
                                         </Button>
                                     </div>
                                     {couponError && <p className="text-[10px] text-red-500 font-bold ml-1 animate-bounce">{couponError}</p>}
-                                    {appliedCoupon && <p className="text-[10px] text-white font-bold ml-1">✓ Discount Applied</p>}
+                                    {appliedCoupon && <p className="text-[10px] text-emerald-500 font-bold ml-1">✓ Discount Applied</p>}
                                 </div>
                             </div>
 
