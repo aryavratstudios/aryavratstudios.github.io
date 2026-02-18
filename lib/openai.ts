@@ -1,11 +1,17 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy initialization - only create client when actually needed
+function getOpenAIClient() {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+        throw new Error("Missing OPENAI_API_KEY environment variable");
+    }
+    return new OpenAI({ apiKey });
+}
 
 export async function generatePortfolioDescription(projectName: string, serviceType: string, brief: string) {
     try {
+        const openai = getOpenAIClient();
         const response = await openai.chat.completions.create({
             model: "gpt-4o",
             messages: [
@@ -30,6 +36,7 @@ export async function generatePortfolioDescription(projectName: string, serviceT
 
 export async function getAiAssistantResponse(message: string, context: string) {
     try {
+        const openai = getOpenAIClient();
         const response = await openai.chat.completions.create({
             model: "gpt-4o",
             messages: [
