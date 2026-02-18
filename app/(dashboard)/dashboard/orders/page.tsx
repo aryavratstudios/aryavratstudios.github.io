@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Package, Clock, CheckCircle, Search, Filter, ArrowUpRight, MessageSquare } from "lucide-react";
+import { Package, Clock, CheckCircle, Search, Filter, ArrowUpRight, MessageSquare, Zap } from "lucide-react";
 import Link from "next/link";
 
 export default function OrdersPage() {
