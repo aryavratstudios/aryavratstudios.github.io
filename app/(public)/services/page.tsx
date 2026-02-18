@@ -123,7 +123,7 @@ export default function ServicesPage() {
                     className="mt-24 p-12 glass-card rounded-[3rem] border border-primary/20 text-center relative overflow-hidden"
                 >
                     <div className="absolute inset-0 bg-primary/5 -z-10 animate-pulse-slow"></div>
-                    <h2 className="text-3xl md:text-5xl font-bold mb-6 italic">Ready to transform your vision into reality?</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to transform your vision into reality?</h2>
                     <p className="text-zinc-400 max-w-xl mx-auto mb-10 text-lg">
                         Join our exclusive client network and get direct access to premium digital craftsmanship.
                     </p>

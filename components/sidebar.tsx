@@ -29,8 +29,10 @@ export function Sidebar({ role }: SidebarProps) {
 
     const menuItems = [
         { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-        { href: "/dashboard/new", label: "New Order", icon: PlusCircle },
-        { href: "/dashboard/orders", label: "My Orders", icon: List },
+        ...(role === 'client' ? [
+            { href: "/dashboard/new", label: "New Order", icon: PlusCircle },
+            { href: "/dashboard/orders", label: "My Orders", icon: List },
+        ] : []),
     ];
 
     const adminItems = [
@@ -56,8 +58,8 @@ export function Sidebar({ role }: SidebarProps) {
                     <Logo size={isCollapsed ? 32 : 44} showGlow={!isCollapsed} />
                     {!isCollapsed && (
                         <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col">
-                            <span className="text-sm font-black tracking-tighter text-foreground uppercase">Aryavrat</span>
-                            <span className="text-[10px] uppercase tracking-[0.2em] font-black text-primary italic">Studios</span>
+                            <span className="text-sm font-black tracking-tighter text-foreground uppercase">AryavratHQ</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] font-black text-primary">Studios</span>
                         </motion.div>
                     )}
                 </Link>
@@ -78,7 +80,7 @@ export function Sidebar({ role }: SidebarProps) {
                     ))}
                 </div>
 
-                {role === 'admin' && (
+                {['admin', 'designer', 'manager'].includes(role) && (
                     <div className="space-y-1">
                         <div className={cn("text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-4 px-4", isCollapsed && "text-center px-0")}>
                             {isCollapsed ? "•••" : "Administration"}

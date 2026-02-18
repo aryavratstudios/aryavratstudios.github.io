@@ -1,28 +1,34 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { AiAssistant } from "@/components/ai-assistant";
+import MouseFollower from "@/components/mouse-follower";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Aryavrat Studio | Elite Digital Production",
-  description: "High-end digital agency specializing in thumbnail design, video editing, and creative research.",
+  title: "AryavratHQ | Premium Digital Solutions",
+  description: "Crafting high-performance digital experiences with premium design and robust engineering.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} font-sans antialiased bg-background text-foreground shadow-2xl selection:bg-primary/30`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning className="dark">
+      <body className={`${inter.variable} font-inter antialiased bg-black text-white selection:bg-primary selection:text-black`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          forcedTheme="dark"
+        >
+          <MouseFollower />
+          {children}
+          <AiAssistant />
+        </ThemeProvider>
       </body>
     </html>
   );

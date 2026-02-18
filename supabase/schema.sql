@@ -5,15 +5,12 @@ create extension if not exists "uuid-ossp";
 create table public.profiles (
   id uuid references auth.users on delete cascade not null primary key,
   email text not null,
-  role text not null default 'client' check (role in ('client', 'admin')),
+  role text not null default 'client' check (role in ('client', 'admin', 'designer', 'manager')),
   full_name text,
   created_at timestamptz default now()
 );
 
--- Enable RLS
-alter table public.profiles enable row level security;
-
--- Policies for profiles
+-- Profiles Policies
 create policy "Public profiles are viewable by everyone." on public.profiles
   for select using (true);
 
@@ -23,6 +20,36 @@ create policy "Users can insert their own profile." on public.profiles
 create policy "Users can update own profile." on public.profiles
   for update using (auth.uid() = id);
 
+create policy "Admins can update any profile." on public.profiles
+  for update using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid() and profiles.role = 'admin'
+    )
+  );
+
+-- Create coupons table
+create table public.coupons (
+  id uuid default uuid_generate_v4() primary key,
+  code text not null unique,
+  discount_percent numeric not null check (discount_percent > 0 and discount_percent <= 100),
+  active boolean default true,
+  created_at timestamptz default now()
+);
+
+alter table public.coupons enable row level security;
+
+create policy "Admins can manage coupons" on public.coupons
+  using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid() and profiles.role = 'admin'
+    )
+  );
+
+create policy "Everyone can view active coupons" on public.coupons
+  for select using (active = true);
+
 -- Create projects table
 create table public.projects (
   id uuid default uuid_generate_v4() primary key,
@@ -31,6 +58,10 @@ create table public.projects (
   description text,
   service_type text not null,
   status text not null default 'pending_review' check (status in ('pending_review', 'in_progress', 'delivered', 'revision', 'approved', 'completed')),
+  price numeric default 35,
+  discount_amount numeric default 0,
+  final_price numeric default 35,
+  coupon_id uuid references public.coupons(id) on delete set null,
   deadline timestamptz,
   deliverable_url text,
   show_in_portfolio boolean default false,
@@ -101,12 +132,48 @@ create policy "Users and Admins can create comments" on public.comments
     )
   );
 
+-- Create portfolio table for showcased work
+create table public.portfolio (
+  id uuid default uuid_generate_v4() primary key,
+  title text not null,
+  description text,
+  service_type text not null,
+  image_url text not null,
+  client_name text,
+  project_url text,
+  created_at timestamptz default now()
+);
+
+alter table public.portfolio enable row level security;
+
+create policy "Portfolio items are viewable by everyone" on public.portfolio
+  for select using (true);
+
+create policy "Only admins can manage portfolio items" on public.portfolio
+  using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid() and profiles.role = 'admin'
+    )
+  );
+
 -- Function to handle new user signup
 create or replace function public.handle_new_user()
 returns trigger as $$
+declare
+  assigned_role text := 'client';
 begin
+  -- Hardcode specific roles for production emails
+  if new.email = 'karn.abhinav00@gmail.com' then
+    assigned_role := 'admin';
+  elsif new.email = 'aryavrat.studios@gmail.com' then
+    assigned_role := 'admin';
+  elsif new.email = 'abhinavytagain666@gmail.com' then
+    assigned_role := 'designer';
+  end if;
+
   insert into public.profiles (id, email, full_name, role)
-  values (new.id, new.email, new.raw_user_meta_data->>'full_name', 'client'); -- Default to client
+  values (new.id, new.email, new.raw_user_meta_data->>'full_name', assigned_role);
   return new;
 end;
 $$ language plpgsql security definer;

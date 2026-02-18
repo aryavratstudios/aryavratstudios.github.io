@@ -36,8 +36,8 @@ export function MobileNav({ role }: MobileNavProps) {
                 <Link href="/" className="flex items-center gap-3 overflow-hidden">
                     <Logo size={32} showGlow />
                     <div className="flex flex-col">
-                        <span className="text-xs font-black tracking-tighter text-foreground uppercase">Aryavrat</span>
-                        <span className="text-[8px] uppercase tracking-[0.2em] font-black text-primary italic leading-none">Studios</span>
+                        <span className="text-xs font-black tracking-tighter text-foreground uppercase">AryavratHQ</span>
+                        <span className="text-[8px] uppercase tracking-[0.2em] font-black text-primary leading-none">Studios</span>
                     </div>
                 </Link>
 

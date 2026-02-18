@@ -12,14 +12,12 @@ export async function updateProjectStatus(formData: FormData) {
     const id = formData.get("id") as string;
     const status = formData.get("status") as string;
 
-    // Verify specific admin
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user || user.email !== ADMIN_EMAIL) {
-        console.error("Unauthorized: Only lead admin can update status");
-        return;
-    }
+    if (!user) return;
 
-    // Fetch existing project info for AI
+    const { data: adminProfile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (adminProfile?.role !== "admin") return;
+
     const { data: project } = await supabase
         .from("projects")
         .select("title, service_type, description")
@@ -28,7 +26,6 @@ export async function updateProjectStatus(formData: FormData) {
 
     const updates: any = { status };
 
-    // Portfolio Automation
     if (status === "completed" && project) {
         const aiDescription = await generatePortfolioDescription(
             project.title,
@@ -42,7 +39,6 @@ export async function updateProjectStatus(formData: FormData) {
     }
 
     await supabase.from("projects").update(updates).eq("id", id);
-
     revalidatePath("/admin");
     revalidatePath("/dashboard");
     revalidatePath("/work");
@@ -55,19 +51,97 @@ export async function togglePortfolio(formData: FormData) {
     const show = currentStateStr === "true";
     const newState = !show;
 
-    // Verify admin
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .single();
-
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
     if (profile?.role !== "admin") return;
 
     await supabase.from("projects").update({ show_in_portfolio: newState }).eq("id", id);
     revalidatePath("/admin");
     revalidatePath("/work");
+}
+
+export async function updateProfileRole(formData: FormData) {
+    const supabase = await createClient();
+    const id = formData.get("id") as string;
+    const role = formData.get("role") as string;
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (profile?.role !== "admin") return;
+
+    await supabase.from("profiles").update({ role }).eq("id", id);
+    revalidatePath("/admin");
+}
+
+export async function createCoupon(formData: FormData) {
+    const supabase = await createClient();
+    const code = formData.get("code") as string;
+    const discount = parseInt(formData.get("discount") as string);
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: adminProfile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (adminProfile?.role !== "admin") return;
+
+    await supabase.from("coupons").insert({ code: code.toUpperCase(), discount_percent: discount, active: true });
+    revalidatePath("/admin");
+}
+
+export async function createUser(formData: FormData) {
+    const supabase = await createClient();
+    const email = formData.get("email") as string;
+    const fullName = formData.get("full_name") as string;
+    const role = formData.get("role") as string;
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { error: "Not authenticated" };
+
+    const { data: adminProfile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (adminProfile?.role !== "admin") return { error: "Not authorized" };
+
+    // Create auth user with admin privileges
+    const { data: newUser, error: authError } = await supabase.auth.admin.createUser({
+        email,
+        email_confirm: true,
+        user_metadata: {
+            full_name: fullName
+        }
+    });
+
+    if (authError) {
+        console.error("Auth error:", authError);
+        return { error: authError.message };
+    }
+
+    // Update profile with role
+    if (newUser.user) {
+        await supabase.from("profiles").update({
+            role,
+            full_name: fullName
+        }).eq("id", newUser.user.id);
+    }
+
+    revalidatePath("/admin");
+    return { success: true };
+}
+
+
+export async function updateProjectPrice(formData: FormData) {
+    const supabase = await createClient();
+    const id = formData.get("id") as string;
+    const price = Number(formData.get("price"));
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    if (profile?.role !== "admin") return;
+
+    await supabase.from("projects").update({ price, final_price: price }).eq("id", id);
+    revalidatePath("/admin");
 }

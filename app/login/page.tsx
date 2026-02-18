@@ -73,7 +73,7 @@ function LoginForm() {
                                 <LogIn className="h-8 w-8 text-black" />
                             </motion.div>
                             <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white">
-                                Access the <span className="text-primary italic">Atelier</span>
+                                Access the <span className="text-primary">Atelier</span>
                             </h1>
                             <p className="text-zinc-400 text-lg leading-relaxed">
                                 Join our exclusive ecosystem of high-performance digital craftsmanship.

@@ -14,7 +14,7 @@ export default function PrivacyPage() {
                 >
                     <div className="text-center space-y-4">
                         <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
-                            Privacy <span className="text-primary italic">Policy</span>
+                            Privacy <span className="text-primary">Policy</span>
                         </h1>
                         <p className="text-zinc-500 text-lg">Last Updated: February 16, 2026</p>
                     </div>

@@ -103,7 +103,7 @@ export default function NewOrderPage() {
                                     className="min-h-[180px] bg-white/5 border-white/10 rounded-2xl p-4 text-base focus:ring-primary"
                                     required
                                 />
-                                <p className="text-[10px] text-zinc-600 italic">Clear briefs result in faster turnaround and better alignment.</p>
+                                <p className="text-[10px] text-zinc-600">Clear briefs result in faster turnaround and better alignment.</p>
                             </div>
 
                             <div className="pt-4">

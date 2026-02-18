@@ -51,10 +51,10 @@ export default function DashboardPage() {
                 className="flex flex-col md:flex-row md:items-center justify-between gap-4"
             >
                 <div>
-                    <h1 className="text-4xl font-bold tracking-tight text-white mb-2">Welcome Back</h1>
-                    <p className="text-zinc-500 text-sm">Here's an overview of your active creative projects.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Welcome Back</h1>
+                    <p className="text-zinc-400 text-sm">Here's an overview of your active creative projects.</p>
                 </div>
-                <Button asChild className="rounded-full h-12 px-8 font-black shadow-glow-primary hover:scale-105 transition-all bg-primary text-white border-none">
+                <Button asChild className="rounded-full h-11 px-7 font-semibold shadow-glow-primary hover:scale-105 transition-all bg-primary text-white border-none">
                     <Link href="/dashboard/new">
                         <PlusCircle className="mr-2 h-5 w-5" />
                         START NEW PROJECT
@@ -112,31 +112,40 @@ export default function DashboardPage() {
                                         initial={{ opacity: 0, scale: 0.98 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: i * 0.05 }}
-                                        className="flex items-center justify-between p-5 rounded-[1.5rem] bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all group"
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-500 group-hover:text-primary group-hover:bg-primary/10 transition-all">
-                                                <Package className="h-6 w-6" />
+                                        <Link
+                                            href={`/dashboard/orders/${project.id}`}
+                                            className="flex items-center justify-between p-5 rounded-[1.5rem] bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all group cursor-pointer"
+                                        >
+                                            <div className="flex items-center gap-4">
+                                                <div className="h-12 w-12 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-500 group-hover:text-primary group-hover:bg-primary/10 transition-all">
+                                                    <Package className="h-6 w-6" />
+                                                </div>
+                                                <div>
+                                                    <div className="font-bold text-white mb-0.5">{project.title}</div>
+                                                    <div className="text-xs text-zinc-500 uppercase font-bold tracking-tight">{project.service_type}</div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <div className="font-bold text-white mb-0.5">{project.title}</div>
-                                                <div className="text-xs text-zinc-500 uppercase font-bold tracking-tight">{project.service_type}</div>
+                                            <div className="flex items-center gap-4">
+                                                {project.status === 'pending_review' && (
+                                                    <Button size="sm" asChild className="h-8 rounded-full bg-primary/20 text-primary border border-primary/20 hover:bg-primary text-[10px] font-black uppercase tracking-widest hover:text-black transition-all">
+                                                        <span onClick={(e) => e.stopPropagation()}>
+                                                            <Link href={`/dashboard/checkout/${project.id}`}>Complete Payment</Link>
+                                                        </span>
+                                                    </Button>
+                                                )}
+                                                <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest
+                                                    ${project.status === 'delivered' ? 'bg-accent/10 text-accent border border-accent/20' :
+                                                        project.status === 'revision' ? 'bg-orange-500/10 text-orange-500 border border-orange-500/20' :
+                                                            project.status === 'completed' ? 'bg-accent/10 text-accent border border-accent/20' :
+                                                                project.status === 'payment_done' ? 'bg-blue-500/10 text-blue-500 border border-blue-500/20' :
+                                                                    project.status === 'in_progress' ? 'bg-primary/10 text-primary border border-primary/20' :
+                                                                        'bg-zinc-800 text-zinc-400 border border-white/5'}`}>
+                                                    {project.status.replace('_', ' ')}
+                                                </span>
+                                                <ChevronRight className="h-4 w-4 text-zinc-700 group-hover:text-white transition-colors" />
                                             </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            {project.status === 'pending_review' && (
-                                                <Button size="sm" asChild className="h-8 rounded-full bg-primary/20 text-primary border border-primary/20 hover:bg-primary text-[10px] font-black uppercase tracking-widest hover:text-black transition-all">
-                                                    <Link href={`/dashboard/checkout/${project.id}`}>Complete Payment</Link>
-                                                </Button>
-                                            )}
-                                            <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest
-                                                ${project.status === 'completed' ? 'bg-secondary/10 text-secondary border border-secondary/20' :
-                                                    project.status === 'in_progress' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' :
-                                                        'bg-zinc-800 text-zinc-500 border border-white/5'}`}>
-                                                {project.status.replace('_', ' ')}
-                                            </span>
-                                            <ChevronRight className="h-4 w-4 text-zinc-700 group-hover:text-white transition-colors" />
-                                        </div>
+                                        </Link>
                                     </motion.div>
                                 ))}
                             </div>
