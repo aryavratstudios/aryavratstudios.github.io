@@ -21,6 +21,50 @@ export async function getDiscordStatus() {
     }
 }
 
+/**
+ * Generate a Discord invite link for clients
+ * Returns an instant invite URL that clients can use to join the server
+ */
+export async function createDiscordInvite(): Promise<string | null> {
+    const guildId = process.env.DISCORD_GUILD_ID;
+    const botToken = process.env.DISCORD_BOT_TOKEN;
+
+    if (!guildId || !botToken) {
+        console.error("Discord configuration missing");
+        return null;
+    }
+
+    try {
+        // Create a temporary invite with 1 day max age and unlimited uses
+        const response = await fetch(`https://discord.com/api/v10/channels/${process.env.DISCORD_WELCOME_CHANNEL_ID || guildId}/invites`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bot ${botToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                max_age: 86400, // 24 hours
+                max_uses: 0, // unlimited uses
+                temporary: false
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Discord Invite Error:", JSON.stringify(errorData, null, 2));
+            // Fallback to static invite if API fails
+            return process.env.DISCORD_INVITE_URL || null;
+        }
+
+        const inviteData = await response.json();
+        return `https://discord.gg/${inviteData.code}`;
+    } catch (error) {
+        console.error("Discord Invite Error:", error);
+        // Fallback to static invite if API fails
+        return process.env.DISCORD_INVITE_URL || null;
+    }
+}
+
 export async function createDiscordTicket(projectName: string, clientName: string) {
     const guildId = process.env.DISCORD_GUILD_ID;
     const botToken = process.env.DISCORD_BOT_TOKEN;

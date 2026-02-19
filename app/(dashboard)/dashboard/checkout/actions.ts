@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
-import { createDiscordTicket } from "@/lib/discord";
+import { createDiscordTicket, createDiscordInvite } from "@/lib/discord";
 import { validatePrice, getBasePrice } from "@/lib/pricing";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { logActivity, generatePaymentToken } from "@/lib/security";
@@ -116,6 +116,9 @@ export async function completePayment(projectId: string, couponId?: string) {
 
     // Create Discord Ticket
     const discordTicket = await createDiscordTicket(project.title, user.email || user.id);
+    
+    // Generate Discord invite for client to join
+    const discordInvite = await createDiscordInvite();
 
     revalidatePath("/dashboard");
     revalidatePath("/dashboard/orders");
@@ -123,6 +126,6 @@ export async function completePayment(projectId: string, couponId?: string) {
     return {
         success: true,
         ticketUrl: discordTicket?.url,
-        inviteUrl: process.env.DISCORD_INVITE_URL || "https://discord.gg/aUZuXcZvYa"
+        inviteUrl: discordInvite || process.env.DISCORD_INVITE_URL || "https://discord.gg/aUZuXcZvYa"
     };
 }

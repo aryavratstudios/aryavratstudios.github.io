@@ -53,3 +53,10 @@ export async function isAdmin(userId?: string): Promise<boolean> {
     
     return profile?.role === "admin";
 }
+
+/**
+ * Alias for isAdmin for backward compatibility
+ */
+export async function isSuperAdmin(): Promise<boolean> {
+    return isAdmin();
+}
