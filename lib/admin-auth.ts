@@ -57,6 +57,13 @@ export async function isAdmin(userId?: string): Promise<boolean> {
 /**
  * Alias for isAdmin for backward compatibility
  */
-export async function isSuperAdmin(): Promise<boolean> {
+export async function isSuperAdmin(email?: string): Promise<boolean> {
+    if (email) {
+        // Check if email is whitelisted
+        const whitelistedEmails = process.env.ADMIN_WHITELIST?.split(",") || [];
+        if (whitelistedEmails.includes(email.toLowerCase())) {
+            return true;
+        }
+    }
     return isAdmin();
 }
