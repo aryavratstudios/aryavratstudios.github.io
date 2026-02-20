@@ -6,6 +6,7 @@ import { AiAssistant } from "@/components/ai-assistant";
 import MouseFollower from "@/components/mouse-follower";
 import { BackgroundVibe } from "@/components/home/background-vibe";
 import { CustomCursor } from "@/components/ui/custom-cursor";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
@@ -56,6 +57,17 @@ export default function RootLayout({
           <BackgroundVibe />
           {children}
           <AiAssistant />
+          <Script id="apollo-tracking" strategy="afterInteractive">
+            {`
+              function initApollo(){
+                var n=Math.random().toString(36).substring(7),o=document.createElement("script");
+                o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,
+                o.onload=function(){window.trackingFunctions.onLoad({appId:"69983efdc9251b001d5c06bf"})},
+                document.head.appendChild(o)
+              }
+              initApollo();
+            `}
+          </Script>
         </ThemeProvider>
       </body>
     </html>
