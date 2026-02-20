@@ -9,13 +9,13 @@ import { checkRateLimit } from "@/lib/rate-limit";
 export async function processScreenshotAction(projectId: string, imageUrl: string) {
     // Verify admin authorization
     const { user } = await requireAdmin();
-    
+
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
-    
+
     const supabase = await createClient();
 
     // Trigger AI Extraction
@@ -96,13 +96,13 @@ export async function processScreenshotAction(projectId: string, imageUrl: strin
 export async function syncToHqAction(projectId: string) {
     // Verify admin authorization
     const { user } = await requireAdmin();
-    
+
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
-    
+
     const supabase = await createClient();
 
     // Fetch project data and its intelligence relations

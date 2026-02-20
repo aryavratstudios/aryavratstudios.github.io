@@ -12,7 +12,7 @@ export async function updateProjectStatus(formData: FormData) {
     const { user } = await requireAdmin();
 
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
@@ -66,7 +66,7 @@ export async function togglePortfolio(formData: FormData) {
     const { user } = await requireAdmin();
 
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
@@ -95,7 +95,7 @@ export async function updateProfileRole(formData: FormData) {
     const { user } = await requireAdmin();
 
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
@@ -127,7 +127,7 @@ export async function createCoupon(formData: FormData) {
     const { user } = await requireAdmin();
 
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
@@ -157,7 +157,7 @@ export async function createUser(formData: FormData): Promise<void> {
     const { user } = await requireAdmin();
 
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
@@ -208,7 +208,7 @@ export async function updateProjectPrice(formData: FormData) {
     const { user } = await requireAdmin();
 
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }

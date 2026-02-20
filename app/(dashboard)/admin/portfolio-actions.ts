@@ -8,13 +8,13 @@ import { checkRateLimit } from "@/lib/rate-limit";
 export async function addPortfolioItem(formData: FormData) {
     // Verify admin authorization
     const { user } = await requireAdmin();
-    
+
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
-    
+
     const supabase = await createClient();
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
@@ -43,13 +43,13 @@ export async function addPortfolioItem(formData: FormData) {
 export async function deletePortfolioItem(formData: FormData) {
     // Verify admin authorization
     const { user } = await requireAdmin();
-    
+
     // Rate limiting for admin actions
-    const rateCheck = checkRateLimit(user.id, "admin");
+    const rateCheck = await checkRateLimit(user.id, "admin");
     if (!rateCheck.allowed) {
         throw new Error("Too many admin actions. Please wait.");
     }
-    
+
     const supabase = await createClient();
     const id = formData.get("id") as string;
 
