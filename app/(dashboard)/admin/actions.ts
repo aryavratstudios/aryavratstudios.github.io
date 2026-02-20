@@ -279,3 +279,41 @@ export async function fetchAdminStats() {
         activeProjects
     };
 }
+export async function deleteReview(formData: FormData) {
+    const { user } = await requireAdmin();
+    const rateCheck = await checkRateLimit(user.id, "admin");
+    if (!rateCheck.allowed) throw new Error("Too many admin actions.");
+
+    const supabase = await createClient();
+    const id = formData.get("id") as string;
+
+    if (!id) throw new Error("Missing review ID");
+
+    const { error } = await supabase.from("reviews").delete().eq("id", id);
+    if (error) throw error;
+
+    await logAdminAction("delete_review", id, {}, { reviewId: id });
+    revalidatePath("/reviews");
+    revalidatePath("/admin");
+}
+
+export async function toggleReviewVisibility(formData: FormData) {
+    const { user } = await requireAdmin();
+    const rateCheck = await checkRateLimit(user.id, "admin");
+    if (!rateCheck.allowed) throw new Error("Too many admin actions.");
+
+    const supabase = await createClient();
+    const id = formData.get("id") as string;
+    const currentStateStr = formData.get("currentState") as string;
+    const isPublic = currentStateStr === "true";
+    const newState = !isPublic;
+
+    if (!id) throw new Error("Missing review ID");
+
+    const { error } = await supabase.from("reviews").update({ is_public: newState }).eq("id", id);
+    if (error) throw error;
+
+    await logAdminAction("toggle_review_visibility", id, { newState }, { reviewId: id });
+    revalidatePath("/reviews");
+    revalidatePath("/admin");
+}

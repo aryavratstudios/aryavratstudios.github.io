@@ -1,10 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 
 const ADMIN_WHITELIST = [
-    "karn.abhinav00@gmail.com",
-    "abhinavytagain666@gmail.com",
-    "inkly412@gmail.com",
-    "aryavrat.studios@gmail.com"
+    "karn.abhinv00@gmail.com",
+    "abhinavytagain666@gmail.com"
 ];
 
 /**

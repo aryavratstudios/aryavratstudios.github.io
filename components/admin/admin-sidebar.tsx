@@ -13,7 +13,8 @@ import {
     FileText,
     Wallet,
     PlusSquare,
-    ArrowRight
+    ArrowRight,
+    Star
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -21,15 +22,12 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 export function AdminSidebar() {
     const pathname = usePathname();
 
-    const admins = [
-        { name: "Abhinav", role: "Super Admin", initial: "AB", color: "from-purple-500 to-indigo-500" },
-        { name: "Aryavrat", role: "Admin", initial: "AS", color: "from-pink-500 to-rose-500" },
-    ];
+    const admins: any[] = [];
 
     return (
         <aside className="w-64 h-screen sticky top-0 flex flex-col z-40 hidden md:flex p-6 overflow-hidden">
             {/* Background with spec shadow and blur */}
-            <div className="absolute inset-x-0 inset-y-0 bg-stone-950/80 rounded-3xl shadow-[0px_64px_64px_-32px_rgba(41,15,0,0.56)] border-[0.50px] border-stone-400 backdrop-blur-[80px] -z-10" />
+            <div className="absolute inset-x-0 inset-y-0 bg-stone-950/80 rounded-3xl shadow-[0px_64px_64px_-32px_rgba(41,15,0,0.56)] backdrop-blur-[80px] -z-10" />
 
             {/* User Profile Section */}
             <div className="flex items-center gap-4 relative mb-12 mt-2">
@@ -88,6 +86,13 @@ export function AdminSidebar() {
                             <Wallet className="w-5 h-5" />
                             <span className="text-sm font-medium">Wallet</span>
                         </Link>
+                        <Link href="/admin/reviews" className={cn(
+                            "flex items-center gap-4 px-5 py-4 rounded-xl transition-all group",
+                            pathname === "/admin/reviews" ? "bg-white/10 text-white border border-white/10" : "text-white/50 hover:text-white hover:bg-white/5"
+                        )}>
+                            <Star className="w-5 h-5 px-0.5" />
+                            <span className="text-sm font-medium">Reviews</span>
+                        </Link>
                     </div>
                 </div>
 
@@ -118,7 +123,7 @@ export function AdminSidebar() {
             {/* Bottom Card (Control Center) */}
             <div className="mt-6 mb-4 relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-purple-600/20 blur-xl opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative bg-rose-950/10 backdrop-blur-md rounded-2xl p-5 border border-stone-400 shadow-[0px_64px_64px_-32px_rgba(102,37,0,0.56)] overflow-hidden">
+                <div className="relative bg-rose-950/10 backdrop-blur-md rounded-2xl p-5 shadow-[0px_64px_64px_-32px_rgba(102,37,0,0.56)] overflow-hidden">
                     <div className="flex flex-col gap-1 mb-4 text-center">
                         <h4 className="text-white font-bold text-sm tracking-tight">Control Center</h4>
                         <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Manage Permissions</p>

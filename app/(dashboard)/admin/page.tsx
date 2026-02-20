@@ -77,13 +77,9 @@ export default async function AdminDashboard() {
         { icon: <MessageSquare size={20} />, label: "Messages", href: "/admin/messages", badge: 3 },
     ];
 
-    const upcomingEvents: Event[] = [
-        { id: "1", title: "Project Delivery", description: "Final review for Client X", time: "09:00AM", color: "#5E81F4" },
-    ];
+    const upcomingEvents: Event[] = [];
 
-    const activities: Activity[] = [
-        { id: "1", title: "Supabase Live Sync", amount: "Active", time: "Just now", icon: <CreditCard size={18} />, iconBg: "#5E81F4", isPositive: true },
-    ];
+    const activities: Activity[] = [];
 
     const sales: Sale[] = []; // Real sales would be fetched here too
 
@@ -259,7 +255,7 @@ export default async function AdminDashboard() {
                         </div>
                         <div>
                             <p className="text-[10px] uppercase tracking-widest font-bold text-white/30">Welcome back,</p>
-                            <h2 className="text-xl font-bold text-white">Aryavrat HQ</h2>
+                            <h2 className="text-xl font-bold text-white">Admin Module</h2>
                         </div>
                     </div>
 

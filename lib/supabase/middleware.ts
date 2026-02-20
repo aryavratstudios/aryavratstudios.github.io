@@ -94,7 +94,7 @@ export async function updateSession(request: NextRequest) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
 
-        const ALLOWED_ADMINS = ["karn.abhinav00@gmail.com", "aryavrat.studios@gmail.com"];
+        const ALLOWED_ADMINS = ["karn.abhinv00@gmail.com", "abhinavytagain666@gmail.com"];
         const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
 
         if (!ALLOWED_ADMINS.includes(user.email!) && profile?.role !== 'admin') {

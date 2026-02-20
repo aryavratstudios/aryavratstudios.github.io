@@ -65,6 +65,8 @@ create table public.projects (
   payment_token text,
   deadline timestamptz,
   deliverable_url text,
+  contract_accepted boolean default false,
+  contract_accepted_at timestamptz,
   show_in_portfolio boolean default false,
   created_at timestamptz default now()
 );
@@ -188,13 +190,21 @@ create or replace function public.handle_new_user()
 returns trigger as $$
 declare
   assigned_role text := 'client';
+  discord_id text;
 begin
-  -- Hardcode specific roles for production emails
-  if new.email = 'karn.abhinav00@gmail.com' then
+  discord_id := new.raw_user_meta_data->>'discord_id';
+
+  -- 1. WHITESLISTED EMAILS (Super Admins)
+  if new.email in ('karn.abhinv00@gmail.com', 'abhinavytagain666@gmail.com') then
     assigned_role := 'admin';
-  elsif new.email = 'aryavrat.studios@gmail.com' then
+  
+  -- 2. DISCORD ID WHITELIST
+  elsif discord_id in ('1170217016360185926', '1438917770233254049', '1310836134305071106') then
     assigned_role := 'admin';
-  elsif new.email = 'abhinavytagain666@gmail.com' then
+  elsif discord_id = '649083072192446484' then
+    assigned_role := 'manager';
+  elsif discord_id = '1170217016360185926' then
+    -- Note: 1170217016360185926 is also in admin list, so it will get admin role above.
     assigned_role := 'designer';
   end if;
 
@@ -209,3 +219,47 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
+-- Create reviews table
+create table public.reviews (
+  id uuid default uuid_generate_v4() primary key,
+  project_id uuid references public.projects(id) on delete cascade,
+  user_id uuid references public.profiles(id) on delete cascade,
+  rating integer not null check (rating >= 1 and rating <= 5),
+  content text,
+  is_public boolean default true,
+  created_at timestamptz default now()
+);
+
+-- Separate review tokens for expiration logic
+create table public.review_tokens (
+  id uuid default uuid_generate_v4() primary key,
+  project_id uuid references public.projects(id) on delete cascade,
+  token text not null unique,
+  expires_at timestamptz not null,
+  used boolean default false,
+  created_at timestamptz default now()
+);
+
+-- RLS for reviews
+alter table public.reviews enable row level security;
+
+create policy "Reviews are viewable by everyone" on public.reviews
+  for select using (is_public = true);
+
+create policy "Admins can manage all reviews" on public.reviews
+  using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid() and profiles.role = 'admin'
+    )
+  );
+
+-- RLS for tokens (Admin/System only)
+alter table public.review_tokens enable row level security;
+create policy "Only system/admins can manage tokens" on public.review_tokens
+  using (
+    exists (
+      select 1 from public.profiles
+      where profiles.id = auth.uid() and profiles.role = 'admin'
+    )
+  );

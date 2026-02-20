@@ -41,9 +41,11 @@ export function getSiteUrl(request?: Request) {
     url = url.replace(/0\.0\.0\.0/g, "localhost");
   }
 
-  // Final validation: Ensure protocol is present
+  // Final validation: Ensure protocol is present and forced to https in production
   if (!url.startsWith("http")) {
     url = `https://${url}`;
+  } else if (!url.includes("localhost") && url.startsWith("http://")) {
+    url = url.replace("http://", "https://");
   }
 
   return url;

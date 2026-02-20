@@ -32,21 +32,19 @@ export function Sidebar({ role }: SidebarProps) {
         { name: "Notification", icon: Bell, href: "/dashboard/notifications" },
     ];
 
-    const users = [
-        { name: "Erik Gunsel", avatar: "https://placehold.co/24x24", status: "bg-neutral-400" },
-        { name: "Emily Smith", avatar: "https://placehold.co/24x24", status: "bg-stone-900" },
-        { name: "Arthur Adelk", avatar: "https://placehold.co/24x24", status: "bg-neutral-400" },
-    ];
+    const users: any[] = [];
 
     return (
         <aside className="w-64 h-screen sticky top-0 flex flex-col z-40 hidden md:flex p-6 overflow-hidden">
             {/* Background with spec shadow and blur */}
-            <div className="absolute inset-x-0 inset-y-0 bg-stone-950/60 rounded-3xl shadow-[0px_64px_64px_-32px_rgba(41,15,0,0.56)] border-[0.50px] border-stone-400 backdrop-blur-[80px] -z-10" />
+            <div className="absolute inset-x-0 inset-y-0 bg-stone-950/60 rounded-3xl shadow-[0px_64px_64px_-32px_rgba(41,15,0,0.56)] backdrop-blur-[80px] -z-10" />
 
             {/* User Profile Section */}
             <div className="flex items-center gap-4 relative mb-12">
                 <div className="relative">
-                    <img className="w-12 h-12 rounded-full border-2 border-stone-800" src="https://placehold.co/48x48" alt="Andrew Smith" />
+                    <div className="w-12 h-12 rounded-full border-2 border-stone-800 bg-stone-900 flex items-center justify-center text-white font-bold uppercase">
+                        {role.charAt(0)}
+                    </div>
                     <div className="absolute -top-1 -right-1 flex gap-0.5">
                         <div className="w-2.5 h-2.5 bg-red-500 rounded-full border border-stone-900" />
                         <div className="w-2.5 h-2.5 bg-amber-400 rounded-full border border-stone-900" />
@@ -54,8 +52,8 @@ export function Sidebar({ role }: SidebarProps) {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <span className="text-white/30 text-[10px] font-medium uppercase tracking-wide leading-5">Product Designer</span>
-                    <span className="text-white text-sm font-medium leading-5 [text-shadow:_0px_0px_16px_rgb(255_255_255_/_1.00)]">Andrew Smith</span>
+                    <span className="text-white/30 text-[10px] font-medium uppercase tracking-wide leading-5">{role}</span>
+                    <span className="text-white text-sm font-medium leading-5 [text-shadow:_0px_0px_16px_rgb(255_255_255_/_1.00)]">User</span>
                 </div>
                 <div className="absolute right-0 w-6 h-6 rotate-90 bg-stone-950/40 rounded-3xl border border-stone-400 backdrop-blur-[90px] flex items-center justify-center cursor-pointer">
                     <div className="w-1.5 h-3 bg-white/25 rounded-sm" />

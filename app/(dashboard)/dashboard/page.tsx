@@ -25,21 +25,29 @@ import { cn } from "@/lib/utils";
 export default function DashboardPage() {
     const [projects, setProjects] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [profile, setProfile] = useState<any>(null);
 
     useEffect(() => {
-        const fetchProjects = async () => {
+        const fetchUserData = async () => {
             const { data: { user } } = await supabase.auth.getUser();
             if (user) {
-                const { data } = await supabase
+                const { data: profileData } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+                setProfile(profileData);
+
+                const { data: projectsData } = await supabase
                     .from("projects")
                     .select("*")
                     .eq("user_id", user.id)
                     .order("created_at", { ascending: false });
-                setProjects(data || []);
+                setProjects(projectsData || []);
             }
             setLoading(false);
         };
-        fetchProjects();
+        fetchUserData();
     }, []);
 
     const activeCount = projects?.filter(p => p.status === 'in_progress' || p.status === 'revision').length || 0;
@@ -105,14 +113,7 @@ export default function DashboardPage() {
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
-                        <div className="flex -space-x-2">
-                            {[1, 2, 3].map(i => (
-                                <div key={i} className="w-8 h-8 rounded-full border-2 border-stone-900 bg-stone-800 overflow-hidden">
-                                    <img src={`https://placehold.co/32x32?text=${i}`} alt="user" />
-                                </div>
-                            ))}
-                        </div>
-                        <span className="text-white/40 text-xs font-medium">Joined +12 people today</span>
+                        <span className="text-white/40 text-xs font-medium">Monitoring your active projects</span>
                     </div>
                 </div>
 
@@ -120,7 +121,9 @@ export default function DashboardPage() {
                 <div className="h-64 relative bg-stone-900/40 rounded-3xl border border-stone-800 p-8 flex flex-col items-center justify-center gap-4 text-center overflow-hidden">
                     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-primary/10 to-transparent -z-10" />
                     <div className="relative">
-                        <img className="w-20 h-20 rounded-full border-4 border-stone-950 shadow-2xl" src="https://placehold.co/80x80" alt="Andrew Smith" />
+                        <div className="w-20 h-20 rounded-full border-4 border-stone-950 shadow-2xl bg-stone-800 flex items-center justify-center text-white text-2xl font-bold uppercase">
+                            {profile?.full_name?.charAt(0) || profile?.email?.charAt(0) || 'U'}
+                        </div>
                         <div className="absolute -bottom-1 -right-1 flex gap-0.5">
                             <div className="w-3 h-3 bg-red-500 rounded-full border-2 border-stone-900" />
                             <div className="w-3 h-3 bg-amber-400 rounded-full border-2 border-stone-900" />
@@ -128,8 +131,8 @@ export default function DashboardPage() {
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-white text-lg font-bold">Andrew Smith</h3>
-                        <p className="text-white/40 text-xs uppercase font-bold tracking-[0.2em] mt-1">Product Designer</p>
+                        <h3 className="text-white text-lg font-bold">{profile?.full_name || 'User'}</h3>
+                        <p className="text-white/40 text-xs uppercase font-bold tracking-[0.2em] mt-1">{profile?.role || 'Client'}</p>
                     </div>
                 </div>
             </div>
